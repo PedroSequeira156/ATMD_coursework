@@ -1,0 +1,22 @@
+function [Delta_V, Delta_V_tot] = Propulsion(Engine_Data,Mass_Stage,Mass_Total)
+
+%% Inputs %%
+
+FR_Max = 0.95;
+k1 = [0.5917 0.4917 0.3917];% 0.2917];
+k2 = 0.29;
+Mass_Payload = 1250;
+
+%% Mass Fraction Per Stage %%
+
+FR = FR_Max - k1.*(Mass_Stage.^(-k2));
+Mass_Fuel = FR.*Mass_Stage;
+
+%% Delta V %%
+
+for n = 1:3
+    Delta_V(n) = Engine_Data.ISP(n).*log(Mass_Total./(Mass_Total - Mass_Fuel(:,n)));
+    Mass_Total = Mass_Total - Mass_Stage(n);
+end
+
+Delta_V_tot = sum(Delta_V);

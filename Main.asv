@@ -1,0 +1,16 @@
+clear all 
+close all
+
+%% Read Data %%
+
+Propellant_Data = readtable('Data.xlsx','Sheet','Propellant Data');
+Engine_Data = readtable('Data.xlsx','Sheet','Engine Data');
+
+%% Initial Generations %%
+
+%x0 = randi([1,18],5,3);
+x0 = [1 2 3];
+
+%% Functions %%
+
+[Mass_Stage, Mass_Total] = Mass(Engine_Data.,x0);
